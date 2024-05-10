@@ -2,27 +2,29 @@ package com.example.pokemons.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.pokemons.R
-import com.example.pokemons.presentation.list.PokemonsViewModel
-import javax.inject.Inject
+import com.example.pokemons.databinding.ActivityMainBinding
+import com.example.pokemons.presentation.list.FragmentPokemons
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: PokemonsViewModel
+//    private lateinit var viewModel: PokemonsViewModel
+//
+//    @Inject
+//    lateinit var viewModelFactory: ViewModelFactory
+//
+//    private val component by lazy {
+//        (application as PokemonsApplication).component
+//    }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var binding: ActivityMainBinding
 
-    private val component by lazy {
-        (application as PokemonsApplication).component
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        component.inject(this)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[PokemonsViewModel::class.java]
-        viewModel.a()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val fragment = FragmentPokemons.newInstance()
+        supportFragmentManager.beginTransaction().replace(R.id.pokemons_container, fragment)
+            .commit()
     }
 }

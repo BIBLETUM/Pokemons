@@ -29,7 +29,7 @@ class PokemonsViewModel @Inject constructor(
                 try {
                     Log.d("a", getPokemonUseCase.invoke(50).toString())
                 } catch (e: Exception) {
-
+                    Log.d("a", e.toString())
                 }
             }
         }

@@ -7,14 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.pokemons.R
+import com.example.pokemons.presentation.PokemonsApplication
+import com.example.pokemons.presentation.ViewModelFactory
+import javax.inject.Inject
 
 class FragmentPokemons : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentPokemons()
-    }
+    private var _binding: FragmentPokemons? = null
+    private val binding: FragmentPokemons
+        get() = _binding ?: throw RuntimeException("FragmentShopItemBinding == null")
 
-    private val viewModel: PokemonsViewModel by viewModels()
+    private lateinit var viewModel: PokemonsViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as PokemonsApplication).component
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,4 +38,9 @@ class FragmentPokemons : Fragment() {
     ): View {
         return inflater.inflate(R.layout.fragment_fragment_pokemons, container, false)
     }
+
+    companion object {
+        fun newInstance() = FragmentPokemons()
+    }
+
 }

@@ -1,13 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.profile.FragmentPokemonProfile">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ImageView
+        android:id="@+id/IV_pokemon_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:src="@tools:sample/avatars" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/TV_pokemon_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="Aboba" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="20" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_hp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="hp" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_attack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="att" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_defense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="def" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_special_attack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="spatt" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_special_defence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="spdef" />
+
+    <TextView
+        android:id="@+id/TV_pokemon_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="speed" />
+
+</LinearLayout>
