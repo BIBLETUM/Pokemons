@@ -14,7 +14,18 @@ class PokemonMapper @Inject constructor() {
         height = pokemonDto.height,
         weight = pokemonDto.weight,
         sprites = mapSpritesDtoToSpritesModel(pokemonDto.sprites),
-    )
+        hp = getBaseStatFromStats(pokemonDto, "hp"),
+        attack = getBaseStatFromStats(pokemonDto, "attack"),
+        defence = getBaseStatFromStats(pokemonDto, "defense"),
+        specialAttack = getBaseStatFromStats(pokemonDto, "special-attack"),
+        specialDefence = getBaseStatFromStats(pokemonDto, "special-defense"),
+        speed = getBaseStatFromStats(pokemonDto, "speed"),
+        )
+
+    private fun getBaseStatFromStats(pokemonDto: PokemonResponseDto, statName: String): Int {
+        val temp = pokemonDto.stats?.filter { it.stat?.name == statName }
+        return temp?.get(0)?.baseStat ?: 0
+    }
 
     fun mapSpritesDtoToSpritesModel(spritesDto: SpritesDto?) = Sprites(
         backDefault = spritesDto?.backDefault,

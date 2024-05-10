@@ -8,4 +8,5 @@ data class PokemonResponseDto(
     @SerializedName("name") val name: String?,
     @SerializedName("sprites") val sprites: SpritesDto?,
     @SerializedName("weight") val weight: Int?,
+    @SerializedName("stats") val stats: List<Stats>?,
 )
