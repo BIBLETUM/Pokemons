@@ -1,6 +1,7 @@
 package com.example.pokemons.presentation.list
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemons.domain.GetPokemonUseCase
@@ -15,14 +16,21 @@ class PokemonsViewModel @Inject constructor(
     private val getPokemonUseCase: GetPokemonUseCase,
 ) : ViewModel() {
 
+    private val dada: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+
     init {
 
     }
 
-    fun a (){
+    fun a() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Log.d("a", getPokemonUseCase.invoke(40).toString())
+                dada.postValue(false)
+                try {
+                    Log.d("a", getPokemonUseCase.invoke(50).toString())
+                } catch (e: Exception) {
+
+                }
             }
         }
     }

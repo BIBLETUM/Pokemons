@@ -8,18 +8,18 @@ import javax.inject.Inject
 class PokemonRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val mapper: PokemonMapper,
-): PokemonRepository {
+) : PokemonRepository {
     override suspend fun getPokemonsList(offset: Int): List<Pokemon> {
         val listPokemonResultDto = apiService.getPokemonsList(offset).results
-        listPokemonResultDto?.let {
-            return listPokemonResultDto
-                .map { mapper.mapUrlStringToId(it.url?:"0") }
-                .map { getPokemon(it) }
-        }
-        return emptyList()
+            ?: throw RuntimeException("Api returned null")
+
+        return listPokemonResultDto
+            .map { mapper.mapUrlStringToId(it.url ?: "0") }
+            .map { getPokemon(it) }
     }
 
     override suspend fun getPokemon(id: Int): Pokemon {
+        if (id <= 0) throw RuntimeException("PokemonId < 0 exception")
         return mapper.mapPokemonResponseDtoToPokemon(apiService.getPokemon(id))
     }
 }
