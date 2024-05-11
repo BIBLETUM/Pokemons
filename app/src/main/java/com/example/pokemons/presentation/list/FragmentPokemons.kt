@@ -13,9 +13,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.pokemons.R
 import com.example.pokemons.databinding.FragmentFragmentPokemonsBinding
 import com.example.pokemons.presentation.PokemonsApplication
 import com.example.pokemons.presentation.ViewModelFactory
+import com.example.pokemons.presentation.profile.FragmentPokemonProfile
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,10 +62,16 @@ class FragmentPokemons : Fragment() {
     }
 
     private fun setUpListeners() {
-        adapter.onReachEndListener = object : PokemonListAdapter.OnReachEndListener {
-            override fun onReachEnd() {
-                viewModel.refreshList()
-            }
+        adapter.onReachEndListener = {
+            viewModel.refreshList()
+        }
+        adapter.onPokemonClickListener = {id ->
+            val fragment = FragmentPokemonProfile.newInstance(id)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .add(R.id.pokemons_container, fragment)
+                .hide(this)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -83,7 +91,6 @@ class FragmentPokemons : Fragment() {
                         }
 
                         is PokemonListState.Content -> {
-                            Log.d("aboba", (it.pokemonsList.groupingBy { it }.eachCount().filter { it.value > 1 }.toString()))
                             binding.progress.isVisible = false
                             adapter.submitList(it.pokemonsList)
                         }
