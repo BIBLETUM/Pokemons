@@ -1,38 +1,45 @@
 package com.example.pokemons.presentation.list
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokemons.domain.GetPokemonUseCase
 import com.example.pokemons.domain.GetPokemonsListUseCase
-import kotlinx.coroutines.Dispatchers
+import com.example.pokemons.domain.RefreshPokemonListUseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PokemonsViewModel @Inject constructor(
     private val getPokemonsListUseCase: GetPokemonsListUseCase,
-    private val getPokemonUseCase: GetPokemonUseCase,
+    private val refreshPokemonListUseCase: RefreshPokemonListUseCase,
 ) : ViewModel() {
 
-    private val dada: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    private val loadingFlow = MutableSharedFlow<PokemonListState>()
+
+    val state: Flow<PokemonListState> = getPokemonsListUseCase.invoke()
+        .filter { it.isNotEmpty() }
+        .map { PokemonListState.Content(it) as PokemonListState }
+        .onStart { emit(PokemonListState.Loading) }
+        .mergeWith(loadingFlow)
+        .catch { emit(PokemonListState.Error(it.toString())) }
 
     init {
-
+        refreshList()
     }
 
-    fun a() {
+    fun refreshList() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                dada.postValue(false)
-                try {
-                    Log.d("a", getPokemonUseCase.invoke(50).toString())
-                } catch (e: Exception) {
-                    Log.d("a", e.toString())
-                }
-            }
+            loadingFlow.emit(PokemonListState.Loading)
+            refreshPokemonListUseCase.invoke()
         }
     }
 
+    private fun <T> Flow<T>.mergeWith(another: Flow<T>): Flow<T> {
+        return merge(this, another)
+    }
 }
