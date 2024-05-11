@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Pokemons</string>
+
+    <string name="name">Name: %s</string>
+    <string name="weight">Weight: %s</string>
+    <string name="height">Height: %s</string>
+
+    <string name="attack">Attack: %s</string>
+    <string name="defence">Defence: %s</string>
+    <string name="spa_attack">Special attack: %s</string>
+    <string name="spa_defence">Special defence: %s</string>
+    <string name="hp">HP: %s</string>
+
+    <string name="speed">Speed: %s</string>
 </resources>

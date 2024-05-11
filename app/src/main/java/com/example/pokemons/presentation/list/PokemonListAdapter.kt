@@ -9,10 +9,8 @@ import com.squareup.picasso.Picasso
 
 class PokemonListAdapter : ListAdapter<Pokemon, PokemonViewHolder>(PokemonDiffCallBack()) {
 
-    var onReachEndListener: OnReachEndListener? = null
-        set(value) {
-            field = value
-        }
+    var onReachEndListener: (() -> Unit)? = null
+    var onPokemonClickListener: ((pokemonId: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val binding = PokemonItemBinding.inflate(
@@ -33,12 +31,20 @@ class PokemonListAdapter : ListAdapter<Pokemon, PokemonViewHolder>(PokemonDiffCa
         }
 
         if (position == itemCount - 10 && onReachEndListener != null) {
-            onReachEndListener?.onReachEnd()
+            onReachEndListener?.invoke()
+        }
+
+        binding.root.setOnClickListener {
+            onPokemonClickListener?.invoke(pokemon.id)
         }
     }
 
-    interface OnReachEndListener{
+    interface OnReachEndListener {
         fun onReachEnd()
+    }
+
+    interface OnPokemonClickListener {
+        fun onPokemonClick(pokemonId: Int)
     }
 
 }
