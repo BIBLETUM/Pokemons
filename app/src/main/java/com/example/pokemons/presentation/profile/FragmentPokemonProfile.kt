@@ -2,7 +2,6 @@ package com.example.pokemons.presentation.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.example.pokemons.databinding.FragmentFragmentPokemonProfileBinding
 import com.example.pokemons.domain.models.Pokemon
 import com.example.pokemons.presentation.PokemonsApplication
 import com.example.pokemons.presentation.ViewModelFactory
-import com.example.pokemons.presentation.list.PokemonsViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -65,18 +63,19 @@ class FragmentPokemonProfile : Fragment() {
         observeViewModel()
     }
 
-    private fun observeViewModel(){
+    private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.state.collect{
-                    when(it) {
+                viewModel.state.collect {
+                    when (it) {
                         is PokemonProfileState.Loading -> {
                             binding.progress.isVisible = true
                         }
 
                         is PokemonProfileState.Error -> {
                             binding.progress.isVisible = false
-                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT)
+                                .show()
                         }
 
                         is PokemonProfileState.Content -> {
@@ -89,7 +88,7 @@ class FragmentPokemonProfile : Fragment() {
         }
     }
 
-    private fun insertData(pokemon: Pokemon){
+    private fun insertData(pokemon: Pokemon) {
         with(binding) {
             TVPokemonName.text = String.format(getString(R.string.name), pokemon.name)
             TVPokemonWeight.text = String.format(getString(R.string.weight), pokemon.weight)
@@ -97,8 +96,10 @@ class FragmentPokemonProfile : Fragment() {
             TVPokemonHp.text = String.format(getString(R.string.hp), pokemon.hp)
             TVPokemonAttack.text = String.format(getString(R.string.attack), pokemon.attack)
             TVPokemonDefense.text = String.format(getString(R.string.defence), pokemon.defence)
-            TVPokemonSpecialAttack.text = String.format(getString(R.string.spa_attack), pokemon.specialAttack)
-            TVPokemonSpecialDefence.text = String.format(getString(R.string.spa_defence), pokemon.specialDefence)
+            TVPokemonSpecialAttack.text =
+                String.format(getString(R.string.spa_attack), pokemon.specialAttack)
+            TVPokemonSpecialDefence.text =
+                String.format(getString(R.string.spa_defence), pokemon.specialDefence)
             TVPokemonSpeed.text = String.format(getString(R.string.speed), pokemon.speed)
 
             Picasso.get().load(pokemon.sprites?.frontDefault).into(IVPokemonImage)
@@ -106,8 +107,8 @@ class FragmentPokemonProfile : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
     private fun parseParams() {

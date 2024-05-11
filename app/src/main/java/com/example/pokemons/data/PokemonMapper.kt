@@ -27,7 +27,7 @@ class PokemonMapper @Inject constructor() {
         return temp?.get(0)?.baseStat ?: 0
     }
 
-    fun mapSpritesDtoToSpritesModel(spritesDto: SpritesDto?) = Sprites(
+    private fun mapSpritesDtoToSpritesModel(spritesDto: SpritesDto?) = Sprites(
         backDefault = spritesDto?.backDefault,
         backFemale = spritesDto?.backFemale,
         backShiny = spritesDto?.backShiny,

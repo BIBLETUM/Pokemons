@@ -2,7 +2,6 @@ package com.example.pokemons.presentation.list
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +64,7 @@ class FragmentPokemons : Fragment() {
         adapter.onReachEndListener = {
             viewModel.refreshList()
         }
-        adapter.onPokemonClickListener = {id ->
+        adapter.onPokemonClickListener = { id ->
             val fragment = FragmentPokemonProfile.newInstance(id)
             requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.pokemons_container, fragment)

@@ -38,13 +38,4 @@ class PokemonListAdapter : ListAdapter<Pokemon, PokemonViewHolder>(PokemonDiffCa
             onPokemonClickListener?.invoke(pokemon.id)
         }
     }
-
-    interface OnReachEndListener {
-        fun onReachEnd()
-    }
-
-    interface OnPokemonClickListener {
-        fun onPokemonClick(pokemonId: Int)
-    }
-
 }
